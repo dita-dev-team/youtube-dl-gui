@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="ydl_icon">
+        <file>go.svg</file>
+        <file>alert.svg</file>
+        <file>clipboard-text.svg</file>
+        <file>download.svg</file>
+        <file>folder.svg</file>
+        <file>information-outline.svg</file>
+        <file>link.svg</file>
+        <file>minus.svg</file>
+        <file>pause.svg</file>
+        <file>play.svg</file>
+        <file>plus.svg</file>
+        <file>quality-high.svg</file>
+        <file>refresh.svg</file>
+        <file>settings.svg</file>
+        <file>stop.svg</file>
+    </qresource>
+</RCC>
