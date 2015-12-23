@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>MainWindow</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton {
@@ -65,186 +65,205 @@ QTabBar::tab:last:selected {
 }
 QTabBar::tab:only-one {
     margin: 0; /* if there is only one tab, we don't want overlapping margins */
-}</string>
+}
+QProgressBar {
+	border: 2px solid grey;
+    border-radius: 10px;
+    margin: 5px 5px;
+    padding: 0 0;
+ }
+QProgressBar::chunk {
+    background-color: grey;
+    width: 25px;
+    radius: 5px;
+}
+QStatusBar::item { 
+	border: 0px solid black };</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="addBtn">
-       <property name="toolTip">
-        <string>Add download</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/plus.svg</normaloff>:/ydl_icon/plus.svg</iconset>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="addBtn">
+        <property name="toolTip">
+         <string>Add download</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/plus.svg</normaloff>:/ydl_icon/plus.svg</iconset>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeBtn">
+        <property name="toolTip">
+         <string>Remove download</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/minus.svg</normaloff>:/ydl_icon/minus.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="downloadBtn">
+        <property name="toolTip">
+         <string>Start all Downloads</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>-1</number>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/download.svg</normaloff>:/ydl_icon/download.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="refreshBtn">
+        <property name="toolTip">
+         <string>Refresh</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/refresh.svg</normaloff>:/ydl_icon/refresh.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="clipboardBtn">
+        <property name="toolTip">
+         <string>Add from Clipboard</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/clipboard-text.svg</normaloff>:/ydl_icon/clipboard-text.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="startBtn">
+        <property name="toolTip">
+         <string>Start Download</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/play.svg</normaloff>:/ydl_icon/play.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pauseBtn">
+        <property name="toolTip">
+         <string>Pause Download</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/pause.svg</normaloff>:/ydl_icon/pause.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="stopBtn">
+        <property name="toolTip">
+         <string>Stop Download</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/stop.svg</normaloff>:/ydl_icon/stop.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="settingsBtn">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="ydl_qui.qrc">
+          <normaloff>:/ydl_icon/settings.svg</normaloff>:/ydl_icon/settings.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>86</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="DownloadTab">
+       <attribute name="title">
+        <string>Downloads</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QTreeView" name="downloadView"/>
+        </item>
+       </layout>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="removeBtn">
-       <property name="toolTip">
-        <string>Remove download</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/minus.svg</normaloff>:/ydl_icon/minus.svg</iconset>
-       </property>
+      <widget class="QWidget" name="pendingTab">
+       <attribute name="title">
+        <string>Pending</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QTreeView" name="pendingView"/>
+        </item>
+       </layout>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="downloadBtn">
-       <property name="toolTip">
-        <string>Start all Downloads</string>
-       </property>
-       <property name="toolTipDuration">
-        <number>-1</number>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/download.svg</normaloff>:/ydl_icon/download.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="refreshBtn">
-       <property name="toolTip">
-        <string>Refresh</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/refresh.svg</normaloff>:/ydl_icon/refresh.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="clipboardBtn">
-       <property name="toolTip">
-        <string>Add from Clipboard</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/clipboard-text.svg</normaloff>:/ydl_icon/clipboard-text.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="startBtn">
-       <property name="toolTip">
-        <string>Start Download</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/play.svg</normaloff>:/ydl_icon/play.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pauseBtn">
-       <property name="toolTip">
-        <string>Pause Download</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/pause.svg</normaloff>:/ydl_icon/pause.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="stopBtn">
-       <property name="toolTip">
-        <string>Stop Download</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/stop.svg</normaloff>:/ydl_icon/stop.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="settingsBtn">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="ydl_qui.qrc">
-         <normaloff>:/ydl_icon/settings.svg</normaloff>:/ydl_icon/settings.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>86</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="DownloadTab">
-      <attribute name="title">
-       <string>Downloads</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QTreeView" name="downloadView"/>
-       </item>
-      </layout>
      </widget>
-     <widget class="QWidget" name="pendingTab">
-      <attribute name="title">
-       <string>Pending</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QTreeView" name="pemdingView"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-  </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="ydl_qui.qrc"/>

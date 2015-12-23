@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication
+from controller.test_ydl import test_ydl
 
 from controller.ydl import YoutubeDLGui
 

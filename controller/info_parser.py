@@ -19,14 +19,18 @@ class InfoParser():
     def url(self, url):
         self.__url = url
 
+    @property
+    def ydl_object(self):
+        return self.__ydl_obj
 
     def generate_info(self):
         try:
             info_dict = self.__ydl.extract_info(self.__url, download=False)
             self.__ydl_obj.title = info_dict['title']
+            self.__ydl_obj.url = self.__url
             for format in info_dict['formats']:
                 filesize = format.get('filesize') if format.get('filesize') else format.get('filesize_approx')
-                self.__ydl_obj.info.append({
+                self.__ydl_obj.format_info.append({
                     'format_id': format['format'],
                     'extension': format['ext'],
                     'resolution': self.__ydl.format_resolution(format),
