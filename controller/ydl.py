@@ -11,7 +11,7 @@ from controller.center import Center
 from controller.info_parser import InfoParser
 from controller.worker import WorkerBuilder
 from model.ydl_logger import YDLLogger
-from view.custom_widgets import CustomInputDialog
+from view.custom_widgets import CustomInputDialog, CustomToolTipDelegate
 from view.ui_ydl import Ui_MainWindow
 import view.ydl_qui
 
@@ -33,6 +33,7 @@ class YoutubeDLGui(QMainWindow):
         self.pending_model.setHeaderData(0, QtCore.Qt.Horizontal, 'Name')
         self.pending_model.setHeaderData(1, QtCore.Qt.Horizontal, 'Quality')
         self.ui.pendingView.setModel(self.pending_model)
+        self.ui.pendingView.setItemDelegate(CustomToolTipDelegate(self.ui.pendingView))
         self.init_status_bar()
         self.parsing_worker = WorkerBuilder.build(bool)
         self.pending_list = []
@@ -87,15 +88,17 @@ class YoutubeDLGui(QMainWindow):
         self.pending_label.setText(msg)
 
     def add_to_pending(self, ydl_obj):
-        index = self.pending_model.rowCount() - 1 if \
-            self.pending_model.rowCount() and (self.pending_model.rowCount() != 1) else self.pending_model.rowCount()
+        if ydl_obj in self.pending_list:
+            return
+
+        index = len(self.pending_list)
+        self.pending_list.append(ydl_obj)
 
         self.pending_model.insertRow(index)
         self.pending_model.setData(self.pending_model.index(index, 0), ydl_obj.title)
-        self.pending_list.append(ydl_obj)
         model_index = self.pending_model.index(index, 0)
-        self.ui.pendingView.selectionModel().select(model_index, QItemSelectionModel.ClearAndSelect)
         self.ui.pendingView.setCurrentIndex(model_index)
+        self.ui.pendingView.selectionModel().select(model_index, QItemSelectionModel.ClearAndSelect)
 
         combobox = QComboBox()
         combobox.currentIndexChanged[int].connect(self.on_combobox_currentIndexChanged)
@@ -108,9 +111,10 @@ class YoutubeDLGui(QMainWindow):
 
     def on_parsing_done(self, success):
         self.pending_progressbar.setVisible(False)
+        self.pending_label.setText("")
+        self.ui.addBtn.setEnabled(True)
         if success:
             self.add_to_pending(self.parser.ydl_object)
-            self.pending_label.setText("")
         else:
             self.parsing_worker.quit()
             self.ui.addBtn.setEnabled(True)

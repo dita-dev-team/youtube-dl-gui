@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QInputDialog
+from PyQt5.QtCore import QEvent, Qt
+from PyQt5.QtWidgets import QInputDialog, QStyledItemDelegate, QToolTip
 
 
 class CustomInputDialog(QInputDialog):
@@ -38,3 +39,26 @@ class CustomInputDialog(QInputDialog):
         self.setWindowTitle(title)
         self.setLabelText(label)
         return self.exec_()
+
+
+class CustomToolTipDelegate(QStyledItemDelegate):
+    def helpEvent(self, event, view, option, index):
+        if not event or not view:
+            return False
+
+        if event.type() == QEvent.ToolTip:
+            rect = view.visualRect(index)
+            size = self.sizeHint(option, index)
+
+            if rect.width() < size.width():
+                tooltip = index.data(Qt.DisplayRole)
+
+                QToolTip.showText(event.globalPos(), tooltip)
+                return True
+
+            if not QStyledItemDelegate.helpEvent(self, event, view, option, index):
+                QToolTip.hideText()
+
+            return True
+
+        return QStyledItemDelegate.helpEvent(self, event, view, option, index)
