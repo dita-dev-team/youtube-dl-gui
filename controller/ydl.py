@@ -10,6 +10,7 @@ from PyQt5.QtCore import pyqtSlot, QItemSelectionModel
 from controller.center import Center
 from controller.info_parser import InfoParser
 from controller.worker import WorkerBuilder
+from model.ydl_logger import YDLLogger
 from view.custom_widgets import CustomInputDialog
 from view.ui_ydl import Ui_MainWindow
 import view.ydl_qui
@@ -42,9 +43,13 @@ class YoutubeDLGui(QMainWindow):
         self.pending_progressbar.setFixedWidth(150)
         self.pending_progressbar.setMaximum(0)
         self.pending_progressbar.setMinimum(0)
-        self.pending_label = QLabel("hello")
-        self.pending_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.pending_label.setFixedWidth(100)
+        self.pending_label = QLabel("")
+        self.pending_label.setAlignment(QtCore.Qt.AlignLeading)
+        self.pending_label.setFixedWidth(220)
+        font = self.pending_label.font()
+        font.setPointSize(10)
+        self.pending_label.setFont(font)
+        self.pending_label.setStyleSheet("padding-left: 5px")
         self.pending_progressbar.setVisible(False)
 
         self.statusBar().addPermanentWidget(self.pending_progressbar)
@@ -61,11 +66,13 @@ class YoutubeDLGui(QMainWindow):
             QMessageBox.information(self, "Invalid Url", "Please enter a valid url")
             self.on_addBtn_clicked()
 
+        ydl_logger = YDLLogger()
+        ydl_logger.debug_message.connect(self.on_debug_message_emitted)
         ydl_opt = {
-            'logging', logging.getLogger('ydl')
+            'logger': ydl_logger
         }
         self.ui.addBtn.setEnabled(False)
-        self.parser = InfoParser(url[0])
+        self.parser = InfoParser(url[0], ydl_opt)
         self.parsing_worker.set_up(self.parser.generate_info, self.on_parsing_done)
         self.parsing_worker.start()
         self.pending_progressbar.setVisible(True)
@@ -74,6 +81,10 @@ class YoutubeDLGui(QMainWindow):
     def on_combobox_currentIndexChanged(self, index):
         list_index = self.ui.pendingView.currentIndex().row()
         self.pending_list[list_index].current_format = self.pending_list[list_index].format_info[index]
+
+    @pyqtSlot(str)
+    def on_debug_message_emitted(self, msg):
+        self.pending_label.setText(msg)
 
     def add_to_pending(self, ydl_obj):
         index = self.pending_model.rowCount() - 1 if \
@@ -99,6 +110,7 @@ class YoutubeDLGui(QMainWindow):
         self.pending_progressbar.setVisible(False)
         if success:
             self.add_to_pending(self.parser.ydl_object)
+            self.pending_label.setText("")
         else:
             self.parsing_worker.quit()
             self.ui.addBtn.setEnabled(True)

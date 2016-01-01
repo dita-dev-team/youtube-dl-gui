@@ -6,9 +6,8 @@ from model.ydl_object import YDLObject
 
 class InfoParser():
     def __init__(self, url=None, ydl_opt={}):
-        self.__ydl_opt = ydl_opt
         self.__url = url
-        self.__ydl = YoutubeDL(self.__ydl_opt)
+        self.__ydl = YoutubeDL(ydl_opt)
         self.__ydl_obj = YDLObject()
 
     @property
